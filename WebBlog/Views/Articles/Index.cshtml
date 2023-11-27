@@ -1,0 +1,69 @@
+﻿@using WebBlog.Contracts.Models
+@using WebBlog.Contracts.Models.Responce.Article
+
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+@model PaginatedList<ArticleViewModel>
+
+@{
+    ViewData["Title"] = "Статьи";
+}
+</br>
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+<form asp-action="Create" method="get">
+    <div class="form-actions no-color">
+        <p>
+            <input type="submit" value="Добавить статью" class="btn btn-secondary" />
+        </p>
+    </div>
+</form>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p> Поиск по автору:&nbsp;<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" /><p/>
+        <p> Поиск по тегам:&nbsp;&nbsp;&nbsp;<input type="text" name="SearchString1" value="@ViewData["CurrentFilter1"]" />
+            &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Найти" class="btn btn-secondary" /> 
+            &nbsp;&nbsp;<a asp-action="Index" class="btn btn-secondary">Отменить поиск</a>
+        </p>
+    </div>
+</form>
+
+
+
+   
+        @foreach (var item in Model)
+        {
+
+            <div class="card border-primary mb-3" style="width: 35rem; max-width:40rem;  display: inline-block;">
+                    <div class="card-header"></div>
+                    <div class="card-body">
+                        <h4 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
+                        
+
+                         <h7>Теги:</h7> 
+                         @foreach (var tag in item.Tags)
+                         {
+                           <span class="badge bg-primary">@tag.Name</span>
+                         }
+                         <p class="card-text"  align="right">Просмотров: @Html.DisplayFor(modelItem => item.ViewsCount)</p>
+                         
+                          <div> <a asp-action="Details" asp-route-id="@item.ArticleId">Просмотр</a> &nbsp;
+                           @if ((await AuthorizationService.AuthorizeAsync(User, "RuleOwnerOrAdminOrModerator")).Succeeded )
+                            {  
+                                <a asp-action="Edit" asp-route-id="@item.ArticleId">Редактировать</a>
+                                <a asp-action="Delete" asp-route-id="@item.ArticleId">Удалить</a>                         
+                            }
+                         </div>
+                  </div>
+            </div>
+
+        }
+
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+

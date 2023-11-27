@@ -1,0 +1,37 @@
+﻿@model IEnumerable<WebBlog.Contracts.Models.Responce.Role.RoleViewModel>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <br />
+    <h4>Все роли</h4>
+    <hr />
+
+<p>
+        <a class="btn btn-secondary"  asp-action="Create">Добавить роль</a>
+</p>
+
+    <div>
+    @foreach (var item in Model)
+    {
+                <div class="card border-primary mb-3" style="width: 25rem;  display: inline-block;">
+                    <div class="card-header"></div>
+                    <div class="card-body">
+                        <h4 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h4>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                       
+                        <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Информация</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                  </div>
+            </div>
+     }
+    </div>
+
+</body>
+</html>

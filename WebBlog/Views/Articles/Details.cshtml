@@ -1,0 +1,89 @@
+﻿@model WebBlog.Contracts.Models.Responce.Article.ArticleViewModel
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+
+<div>
+    <br/>
+    <h3>@Html.DisplayFor(model => model.Title)</h3>
+
+        @if (Model.Tags is not null)
+        {
+            <div>
+          @foreach (var tag in Model.Tags)
+           {
+              <span class="badge bg-primary">@tag.Name</span>
+            }
+            </div>
+        }
+        <hr />
+            <p>
+                @Html.DisplayFor(model => model.Content)
+            </p>
+            <hr />
+
+            <figcaption class="blockquote-footer" align="right">
+                @Html.DisplayFor(model => model.AuthorName)
+              </figcaption>
+           
+</div>
+<div align="right"> 
+    @if ((await AuthorizationService.AuthorizeAsync(User, "RuleOwnerOrAdminOrModerator")).Succeeded )
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.ArticleId">Редактировать</a> 
+    }
+    <a asp-action="Index">Перейти к списку всех статей</a>      
+</div>
+   
+    <h6>Коментарии к статье</h6>
+    <table style="width: 100%;"> 
+    <tbody>
+    @if (Model?.Comments is not null)
+    {
+        @foreach (var cmn in Model.Comments)
+        {
+            <tr class="table-dark">
+                <td>
+                <p>@cmn.Content)</p>
+                  <div align=right>
+                  <span class="badge bg-primary"  align="right">@cmn.Author?.Email</span>
+                  </div>
+                       
+                    @if ((await AuthorizationService.AuthorizeAsync(User, "RuleOwnerOrAdminOrModerator")).Succeeded )
+                       {
+                        <div>
+                            <a asp-action="Edit" asp-controller="Comments" asp-route-id="@cmn.CommentId">Редактировать</a> | 
+                            <a asp-action="Delete"  asp-controller="Comments" asp-route-id="@cmn.CommentId">Удалить</a>  
+                        </div>
+                       }
+                 </td>
+            </tr>
+        }
+        
+    }
+    </tbody>
+    </table>
+
+     <div class="col-md-4" style="width: 100%;">
+        <form method="post" action="/Comments/Create" >
+            <input type="hidden" asp-for="ArticleId" />
+            <div class="form-group">
+            <label for="comment">Комментарий:</label>
+
+            <textarea class="form-control" id="Content" name="Content" rows="5" style="width: 100%;" ></textarea>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary">Оставить комментарий</button>
+        </form>
+    </div>
+</body>
+</html>

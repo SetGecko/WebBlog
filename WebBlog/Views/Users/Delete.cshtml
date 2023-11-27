@@ -1,0 +1,35 @@
+﻿@model WebBlog.Contracts.Models.Request.User.EditUserViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+
+    <br />
+<h3>Вы уверены что хотите удалить пользователя @Model.LastName @Model.FirstName?</h3>
+<br/>
+<div>
+    <h4>Тег</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp- asp-for="Id" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+            <a asp-action="Index">Перейти к списку всех пользователей</a>
+    </form>
+</div>
+</body>
+</html>

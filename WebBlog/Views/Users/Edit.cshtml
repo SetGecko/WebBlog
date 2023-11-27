@@ -1,0 +1,61 @@
+﻿@model WebBlog.Contracts.Models.Request.User.EditUserViewModel
+
+<div class="container-page">
+    <br/>
+    <h2 class="title-margin">Редактирование пользователя</h2>
+    <form asp-action="Edit"> 
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="All" class="text-danger"></div>
+    
+        <hr />
+
+        <div style="margin-bottom: 5px">
+            @if (Model is not null)
+            {
+                 @for (var i = 0; i < Model.UserRoles.Count; i++)
+                {
+                    <div style="display: inline-block; margin-right: 20px;">
+                    <input type="hidden" asp-for="@Model.UserRoles[i].Id" />
+                    <input type="hidden" asp-for="@Model.UserRoles[i].Name " />
+                    <input type="checkbox" asp-for="@Model.UserRoles[i].IsChecked" />
+                    <label>&nbsp;@Model.UserRoles[i].Name </label>
+                    </div>
+                }             
+            }
+		</div>
+        <br/>
+        
+        <div style="margin-bottom: 5px">
+            <label asp-for="FirstName"></label><br />
+            <input class="form-control" asp-for="FirstName" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+            <input class="form-control" asp-for="Id" hidden/>
+        </div>
+        <div style="margin-bottom: 5px">
+            <label asp-for="LastName"></label><br />
+            <input class="form-control" asp-for="LastName" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+            <input class="form-control" asp-for="Id" hidden/>
+        </div>
+        
+        <div style="margin-bottom: 5px">
+            <label asp-for="Email"></label><br />
+            <input class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            <input class="form-control" asp-for="Id" hidden/>
+        </div>
+        <div style="margin-bottom: 5px">
+            <label asp-for="NewPassword"></label><br />
+            <input class="form-control" asp-for="NewPassword" />
+            <span asp-validation-for="NewPassword" class="text-danger"></span>
+            <input class="form-control" asp-for="Id" hidden/>
+        </div>
+        <br/>
+        <div>
+            <input class="btn btn-sm btn-primary" type="submit" value="Сохранить"/>
+        </div>
+        <p>
+            <a  asp-action="Index">Перейти к списку всех пользователей </a>
+        </p>
+    </form>
+</div>

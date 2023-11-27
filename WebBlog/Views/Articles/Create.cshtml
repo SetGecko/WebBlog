@@ -1,0 +1,61 @@
+﻿@using WebBlog.Contracts.Models.Request.Article;
+
+@model NewArticleRequest
+
+@{
+    ViewData["Title"] = "Статьи";
+}
+<br/>
+<h2>Добавление статьи</h2>
+<hr />
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <form id="profile-form" method="post">
+            <div>
+                @if (Model.Tags is not null)
+                {
+                    @for (var i = 0; i < Model.Tags.Count; i++)
+                    {
+                        <div style="display: inline-block; margin-right: 20px;">
+                            <input type="hidden" asp-for="@Model.Tags[i].Id" />
+                            <input type="hidden" asp-for="@Model.Tags[i].LabelName" />
+                            <input type="checkbox" asp-for="@Model.Tags[i].IsChecked" />
+                            <label>&nbsp;@Model.Tags[i].LabelName </label>
+                        </div>
+                    }
+                }
+            </div>
+            <br />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="@Model.AuthorId" class="form-control" type="hidden" />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />              
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>
+                <textarea asp-for="Content" class="form-control" style="height:150px;"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Добавить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index">Перейти к списку всех тегов</a>
+</div>
+
+@section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+} 
+
+

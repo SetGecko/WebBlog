@@ -1,0 +1,42 @@
+﻿@model WebBlog.Contracts.Models.Request.Tag.NewTagRequest
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<br/>
+<h4>Добавление тега</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                    <br />
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+                <br />
+                <button type="submit" class="w-100 btn btn-lg btn-primary">
+                    Добавить</button>
+        </form>
+    </div>
+</div>
+<br/>
+<div>
+        <a   asp-action="Index">Перейти к списку всех тегов</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>

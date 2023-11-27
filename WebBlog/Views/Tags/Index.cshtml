@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WebBlog.Contracts.Models.Responce.Tag.TagViewModel>
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <br />
+    <h4>Все теги</h4>
+    <hr />
+
+<p>
+        <a class="btn btn-secondary"  asp-action="Create">Добавить новый</a>
+</p>
+
+    <div>
+    @foreach (var item in Model)
+    {
+                <div class="card border-primary mb-3" style="width: 25rem;  display: inline-block;">
+                    <div class="card-header"></div>
+                    <div class="card-body">
+                        <h4 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h4>
+                        <p class="card-text"  align="right">Статей: @Html.DisplayFor(modelItem => item.ArticleCount)</p>
+                       
+                        <a asp-action="Edit" asp-route-id="@item.TagId">Редактировать</a> |
+                        <a asp-action="Details" asp-route-id="@item.TagId">Информация</a> |
+                        <a asp-action="Delete" asp-route-id="@item.TagId">Удалить</a>
+                  </div>
+            </div>
+     }
+    </div>
+
+</body>
+</html>

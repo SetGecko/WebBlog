@@ -1,0 +1,38 @@
+﻿@model WebBlog.Contracts.Models.Responce.Comment.CommentViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    <br/>
+<h4>Редактирование коментария</h4>
+<hr />
+<h6>Автор: @Model.Author.LastName @Model.Author.FirstName </h6> 
+ <br/>
+ <div class="col-md-4" style="width: 100%;">
+        <form method="post" action="/Comments/Edit"  >
+            <input type="hidden" asp-for="CommentId" />
+            <input type="hidden" asp-for="ArticleId" />
+            <div class="form-group">
+            <label for="comment">Комментарий:</label>
+
+            <textarea class="form-control" id="Content" name="Content" rows="5" style="width: 100%;" >@Model.Content</textarea>
+        </div>
+        <br/>
+        <button type="submit" class="btn btn-primary">Сохранить</button>  <button type="button" class="btn btn-secondary"onclick="history.back()">Назад</button>
+        </form>
+    </div>
+
+    <br />
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>

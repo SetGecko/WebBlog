@@ -1,0 +1,61 @@
+﻿@using WebBlog.Contracts.Models.Responce.Article;
+
+@model ArticleViewModel
+
+@{
+    ViewData["Title"] = "Статьи";
+}
+<br/>
+<h2>Удалить статью?</h2>
+
+<div>
+    <hr />
+  
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Content)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Content)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Tags)
+            </dt>
+            <dd>
+                 @foreach (var tag in Model.Tags)
+                {
+                     <div style="display: inline-block; margin-right: 10px;">
+                    <span class="badge bg-primary">@tag.Name</span>
+                    </div>
+                    
+                }          
+            
+                @*@Html.DisplayFor(model => model.Tags)*@
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.AuthorName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.AuthorName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Created)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Created)
+            </dd>
+        </dl>
+    <div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="ArticleId" />
+            <input type="submit" value="Удалить" class="btn btn-danger" /> |
+            <a asp-action="Index">Перейти к списку всех тегов</a>
+        </form>
+    </div>
+</div>
